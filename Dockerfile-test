@@ -4,9 +4,9 @@ RUN mkdir /testing
 
 WORKDIR /testing
 
-COPY requirements-test.txt /testing/
+COPY Pipfile* /testing/
 
-RUN pip install -r requirements-test.txt
+RUN pipenv install --dev --system
 
 COPY setup.py /testing/
 

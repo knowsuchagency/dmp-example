@@ -2,11 +2,11 @@ FROM python:3
 
 WORKDIR /mysite
 
-RUN pip install -U pip
+RUN pip install -U pip pipenv
 
-COPY requirements.txt /mysite/
+COPY Pipfile* /mysite/
 
-RUN pip install -r requirements.txt
+RUN pipenv install --system
 
 COPY setup.py /mysite/
 

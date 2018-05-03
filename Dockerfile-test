@@ -1,7 +1,5 @@
 FROM mysite
 
-RUN mkdir /testing
-
 WORKDIR /testing
 
 COPY Pipfile* /testing/

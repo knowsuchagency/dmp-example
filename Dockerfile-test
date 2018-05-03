@@ -1,0 +1,19 @@
+FROM mysite
+
+RUN mkdir /testing
+
+WORKDIR /testing
+
+COPY requirements-test.txt /testing/
+
+RUN pip install -r requirements-test.txt
+
+COPY setup.py /testing/
+
+RUN pip install -e .[testing]
+
+# since we're mounting the code for our tests as a volume
+# we need to remove bytecode on execution
+
+CMD find . -name *.pyc -delete && pytest tests/
+

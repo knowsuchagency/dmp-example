@@ -1,0 +1,183 @@
+Metadata-Version: 2.0
+Name: shell-utils
+Version: 0.5.0
+Summary: Some helpers to make interacting with the shell easier
+Home-page: https://github.com/knowsuchagency/shell-utils
+Author: Stephan Fitzpatrick
+Author-email: knowsuchagency@gmail.com
+License: MIT license
+Description-Content-Type: UNKNOWN
+Keywords: shell-utils
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.6
+Requires-Dist: click
+Provides-Extra: dev
+Requires-Dist: autopep8; extra == 'dev'
+Requires-Dist: bumpversion; extra == 'dev'
+Requires-Dist: coverage; extra == 'dev'
+Requires-Dist: cryptography; extra == 'dev'
+Requires-Dist: flake8; extra == 'dev'
+Requires-Dist: mypy; extra == 'dev'
+Requires-Dist: pytest; extra == 'dev'
+Requires-Dist: pytest-runner; extra == 'dev'
+Requires-Dist: pyyaml; extra == 'dev'
+Requires-Dist: sphinx; extra == 'dev'
+Requires-Dist: tox; extra == 'dev'
+Requires-Dist: sphinx-autodoc-typehints; extra == 'dev'
+Requires-Dist: sphinxcontrib-asyncio; extra == 'dev'
+Requires-Dist: wheel; extra == 'dev'
+Requires-Dist: pipenv; extra == 'dev'
+Requires-Dist: readme; extra == 'dev'
+Requires-Dist: twine; extra == 'dev'
+Provides-Extra: development
+Requires-Dist: autopep8; extra == 'development'
+Requires-Dist: bumpversion; extra == 'development'
+Requires-Dist: coverage; extra == 'development'
+Requires-Dist: cryptography; extra == 'development'
+Requires-Dist: flake8; extra == 'development'
+Requires-Dist: mypy; extra == 'development'
+Requires-Dist: pytest; extra == 'development'
+Requires-Dist: pytest-runner; extra == 'development'
+Requires-Dist: pyyaml; extra == 'development'
+Requires-Dist: sphinx; extra == 'development'
+Requires-Dist: tox; extra == 'development'
+Requires-Dist: sphinx-autodoc-typehints; extra == 'development'
+Requires-Dist: sphinxcontrib-asyncio; extra == 'development'
+Requires-Dist: wheel; extra == 'development'
+Requires-Dist: pipenv; extra == 'development'
+Requires-Dist: readme; extra == 'development'
+Requires-Dist: twine; extra == 'development'
+Provides-Extra: test
+Requires-Dist: autopep8; extra == 'test'
+Requires-Dist: bumpversion; extra == 'test'
+Requires-Dist: coverage; extra == 'test'
+Requires-Dist: cryptography; extra == 'test'
+Requires-Dist: flake8; extra == 'test'
+Requires-Dist: mypy; extra == 'test'
+Requires-Dist: pytest; extra == 'test'
+Requires-Dist: pytest-runner; extra == 'test'
+Requires-Dist: pyyaml; extra == 'test'
+Requires-Dist: sphinx; extra == 'test'
+Requires-Dist: tox; extra == 'test'
+Requires-Dist: sphinx-autodoc-typehints; extra == 'test'
+Requires-Dist: sphinxcontrib-asyncio; extra == 'test'
+Requires-Dist: wheel; extra == 'test'
+Requires-Dist: pipenv; extra == 'test'
+Requires-Dist: readme; extra == 'test'
+Requires-Dist: twine; extra == 'test'
+Provides-Extra: testing
+Requires-Dist: autopep8; extra == 'testing'
+Requires-Dist: bumpversion; extra == 'testing'
+Requires-Dist: coverage; extra == 'testing'
+Requires-Dist: cryptography; extra == 'testing'
+Requires-Dist: flake8; extra == 'testing'
+Requires-Dist: mypy; extra == 'testing'
+Requires-Dist: pytest; extra == 'testing'
+Requires-Dist: pytest-runner; extra == 'testing'
+Requires-Dist: pyyaml; extra == 'testing'
+Requires-Dist: sphinx; extra == 'testing'
+Requires-Dist: tox; extra == 'testing'
+Requires-Dist: sphinx-autodoc-typehints; extra == 'testing'
+Requires-Dist: sphinxcontrib-asyncio; extra == 'testing'
+Requires-Dist: wheel; extra == 'testing'
+Requires-Dist: pipenv; extra == 'testing'
+Requires-Dist: readme; extra == 'testing'
+Requires-Dist: twine; extra == 'testing'
+
+===========
+shell-utils
+===========
+
+
+.. image:: https://img.shields.io/pypi/v/shell_utils.svg
+        :target: https://pypi.python.org/pypi/shell_utils
+
+.. image:: https://img.shields.io/travis/knowsuchagency/shell-utils.svg
+        :target: https://travis-ci.org/knowsuchagency/shell-utils
+
+.. image:: https://pyup.io/repos/github/knowsuchagency/shell-utils/shield.svg
+     :target: https://pyup.io/repos/github/knowsuchagency/shell-utils/
+     :alt: Updates
+
+.. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
+
+
+
+Some helpers to make interacting with the shell easier
+
+
+* Documentation: https://knowsuchagency.github.io/shell-utils
+* Source: https://github.com/knowsuchagency/shell-utils
+
+
+Installation
+------------
+
+    pipenv install shell-utils
+
+Usage
+---------
+
+.. code-block:: Python
+
+    def test_shell_capture():
+        """Test shell output capture."""
+
+        string = 'hello'
+
+        echo_string = shell(f'echo {string}', capture=True)
+
+        assert echo_string.returncode == 0
+        assert echo_string.stdout.decode().strip() == string
+
+        to_stderr = shell(f'echo "{string}" >&2', capture=True)
+
+        assert to_stderr.returncode == 0
+        assert to_stderr.stderr.decode().strip() == string
+
+
+    def test_shell_raises():
+        """Test shell raises."""
+        import subprocess as sp
+
+        with pytest.raises(sp.CalledProcessError):
+            shell('exit 1')
+
+        assert shell('exit 1', check=False).returncode == 1
+
+
+    def test_env():
+        """Test env context manager."""
+        import os
+        import copy
+
+        original_env = copy.deepcopy(os.environ)
+        string = 'world'
+
+        with env(hello=string):
+            assert os.environ['hello'] == string
+
+        assert 'hello' not in os.environ
+        assert os.environ == original_env
+
+
+    def test_path():
+        """Test path context manager."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        import os
+
+        original_path = Path(os.environ['PATH'])
+
+        with TemporaryDirectory() as temp_dir, path(temp_dir) as new_path:
+            temp_dir = Path(temp_dir)
+
+            assert new_path[-1] == temp_dir.__fspath__()
+            assert Path(os.environ['PATH']) != original_path
+
+        assert Path(os.environ['PATH']) == original_path
+
+

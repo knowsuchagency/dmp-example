@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+  web:
+    build: .
+    image: mysite
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mysite:/mysite
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - migration
+
+  db:
+    image: postgres
+
+  migration:
+    image: mysite
+    volumes:
+      - ./mysite:/mysite
+    command: python manage.py migrate
+    depends_on:
+      - db
+
+  tests:
+    image: mysite-test
+    build:
+      context: .
+      dockerfile: Dockerfile-test
+    volumes:
+      - ./mysite:/testing/mysite
+      - ./tests:/testing/tests

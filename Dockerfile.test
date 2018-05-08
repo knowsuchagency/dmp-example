@@ -10,6 +10,8 @@ COPY setup.py /testing/
 
 RUN pip install -e .[testing]
 
+COPY --from=mysite /mysite /mysite
+
 # since we're mounting the code for our tests as a volume
 # we need to remove bytecode on execution
 

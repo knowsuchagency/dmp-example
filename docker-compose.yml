@@ -28,7 +28,7 @@ services:
     image: mysite-test
     build:
       context: .
-      dockerfile: Dockerfile-test
+      dockerfile: Dockerfile.test
     volumes:
       - ./mysite:/testing/mysite
       - ./tests:/testing/tests

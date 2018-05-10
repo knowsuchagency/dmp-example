@@ -3,6 +3,8 @@
 <%block name="content">
     <div class="content">
         <h3>Congratulations -- you've successfully created a new DMP app!</h3>
-        <h4 class="utc-time">Current time in UTC: ${ utc_time }</h4>
+        <p class="server-time">The current server time is ${ now }.</p>
+        <button id="server-time-button">Update Server Time</button>
+        <p class="browser-time">The current browser time is...</p>
     </div>
 </%block>

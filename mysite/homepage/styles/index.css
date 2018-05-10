@@ -5,3 +5,8 @@ main {
 h4.utc-time {
     color: #3771A1;
 }
+
+.server-time {
+    font-size: 2em;
+    color: red;
+}

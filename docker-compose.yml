@@ -9,12 +9,9 @@ services:
       - "8000:8000"
     volumes:
       - ./mysite:/workdir/mysite
-    command: python mysite/manage.py runserver 0.0.0.0:8000
+#    command: python mysite/manage.py runserver 0.0.0.0:8000
     depends_on:
       - migration
-
-  db:
-    image: postgres
 
   migration:
     image: mysite
@@ -23,6 +20,9 @@ services:
     command: python mysite/manage.py migrate
     depends_on:
       - db
+
+  db:
+    image: postgres
 
   tests:
     image: mysite.test

@@ -25,10 +25,10 @@
         },
         "django-mako-plus": {
             "hashes": [
-                "sha256:244db6c4b0c471f8cfbd38ec23ad29b4663d346e007425abe99fda2f29ca83d8"
+                "sha256:a9153732b0013449d9091ac91a0ebe6e1883db352aa82fda4fb15a9fc1f3e249"
             ],
             "index": "pypi",
-            "version": "==5.3.5"
+            "version": "==5.4.8"
         },
         "mako": {
             "hashes": [

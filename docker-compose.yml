@@ -8,8 +8,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./mysite:/mysite
-    command: python manage.py runserver 0.0.0.0:8000
+      - ./mysite:/workdir/mysite
+    command: python mysite/manage.py runserver 0.0.0.0:8000
     depends_on:
       - migration
 
@@ -19,16 +19,16 @@ services:
   migration:
     image: mysite
     volumes:
-      - ./mysite:/mysite
-    command: python manage.py migrate
+      - ./mysite:/workdir/mysite
+    command: python mysite/manage.py migrate
     depends_on:
       - db
 
   tests:
-    image: mysite-test
+    image: mysite.test
     build:
       context: .
       dockerfile: Dockerfile.test
     volumes:
-      - ./mysite:/testing/mysite
-      - ./tests:/testing/tests
+      - ./mysite:/workdir/mysite
+      - ./tests:/workdir/tests

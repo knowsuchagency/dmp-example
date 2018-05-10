@@ -1,19 +1,7 @@
 FROM mysite
 
-WORKDIR /testing
-
-COPY Pipfile* /testing/
-
 RUN pipenv install --dev --system
 
-COPY setup.py /testing/
-
-RUN pip install -e .[testing]
-
-COPY --from=mysite /mysite /mysite
-
-# since we're mounting the code for our tests as a volume
-# we need to remove bytecode on execution
+COPY tests /workdir/tests
 
 CMD find . -name *.pyc -delete && pytest tests/
-
